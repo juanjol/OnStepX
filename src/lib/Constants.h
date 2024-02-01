@@ -48,9 +48,9 @@
 #define TMC5161                     14     // uses TMC software SPI comms   for 1x,2x...,256x  (SPI sets spreadCycle/stealthChop etc.)
 #define TMC_UART_DRIVER_FIRST       15
 #define TMC2208                     15     // uses TMC software UART comms  for 1x,2x...,256x  (UART sets spreadCycle/stealthChop etc, dedicated RX/TX UART to each driver using index 0)
-#define TMC2225                     15     // uses TMC software UART comms  for 1x,2x...,256x  (UART sets spreadCycle/stealthChop etc, dedicated RX/TX UART to each driver using index 0)
-#define TMC2209                     16     // uses TMC software UART comms  for 1x,2x...,256x  (UART sets spreadCycle/stealthChop etc, dedicated RX/TX UART to each driver using index 0)
-#define TMC2226                     16     // uses TMC software UART comms  for 1x,2x...,256x  (UART sets spreadCycle/stealthChop etc, dedicated RX/TX UART to each driver using index 0)
+#define TMC2225                     15     
+#define TMC2209                     16     
+#define TMC2226                     16     
 #define STEP_DIR_DRIVER_LAST        16
 
 // driver (step/dir) decay mode
