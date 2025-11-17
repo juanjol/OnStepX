@@ -34,4 +34,51 @@
                                           //              ***     LEAVING THIS OPTION ENABLED CAN CAUSE EXCESSIVE NV          ***
                                           //              ***     WEAR AND DAMAGE THE MICROCONTROLLER NV SUBSYSTEM !!!        ***
 
+// FRAM CONFIGURATION (I2C Non-Volatile Memory) -----------------------------------------------------------------------------------
+// To use an external FRAM module instead of the default NV storage, uncomment ONE of the following:                      Option
+// #define NV_DRIVER                NV_MB85RC64  //  8KB I2C FRAM (MB85RC64T/V) at address 0x50                            Option
+// #define NV_DRIVER               NV_MB85RC256  // 32KB I2C FRAM (MB85RC256V) at address 0x50                             Option
+
+// Optional: Override default I2C address if your FRAM module uses a different address (A0/A1/A2 pins)
+// #define NV_ADDRESS                     0x50  // Default I2C address. Can be 0x50-0x57 depending on A0-A2 jumpers      Option
+
+// FRAM WIRING FOR FYSETC E4 (ESP32):
+// ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+// │  FRAM Module Pin  │  FYSETC E4 Pin  │  ESP32 GPIO  │  Notes                                                         │
+// ├───────────────────┼─────────────────┼──────────────┼────────────────────────────────────────────────────────────────┤
+// │  VCC              │  3.3V           │  3.3V        │  Power supply (NOT 5V!)                                         │
+// │  GND              │  GND            │  GND         │  Ground                                                         │
+// │  SDA              │  I2C SDA        │  GPIO21      │  I2C Data line (has internal pullup)                            │
+// │  SCL              │  I2C SCL        │  GPIO22      │  I2C Clock line (has internal pullup)                           │
+// │  WP (if present)  │  GND            │  GND         │  Write Protect - connect to GND to allow writes                │
+// └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+//
+// FRAM ADVANTAGES:
+//   - Very high endurance: >300M write cycles (vs ~100K for ESP32 Flash)
+//   - Fast write time: 3ms (vs 5000ms for ESP32 Flash)
+//   - Enables MOUNT_COORDS_MEMORY feature (requires frequent writes)
+//   - More reliable for long-term data retention
+//
+// SETUP PROCEDURE:
+//   1. Wire FRAM module to I2C pins as shown above
+//   2. Uncomment appropriate NV_DRIVER line above (NV_MB85RC64 or NV_MB85RC256)
+//   3. Set NV_WIPE to ON, compile and upload, wait 2 minutes
+//   4. Set NV_WIPE back to OFF, compile and upload again
+//   5. FRAM is now active and ready to use
+
+// ESP32 VIRTUAL SERIAL BLUETOOTH AND IP COMMAND CHANNELS --------------------------------------------------------------------------
+#define SERIAL_BT_MODE                OFF //    OFF, Use SLAVE to enable the interface (ESP32 only.)                          Option
+#define SERIAL_BT_NAME          "OnStepX" //         "OnStepX", Bluetooth device name.                                        Adjust
+#define SERIAL_IP_MODE                OFF //    OFF, WIFI_ACCESS_POINT or WIFI_STATION enables interface (ESP32 only.)        Option
+#define MDNS_NAME               "onstepx" //    "onstepx", mDNS device name.                                                  Adjust
+#define WEB_SERVER                    OFF //    OFF, ON enables Webserver (for Website plugin.)                               Option
+
+// EXTERNAL GPIO SUPPORT -----------------------------------------------------------------------------------------------------------
+#define GPIO_DEVICE                   OFF //    OFF, DS2413: for 2-ch or 4-ch using 1-wire gpio's (one or two devices.)       Option
+                                          //         SWS: for 8-ch Serial gpio (normally 4 unused encoder pins.)
+                                          //         MCP23008: for 8-ch I2C gpio.
+                                          //         MCP23017, X9555, or X8575: for 16-ch I2C gpio.
+                                          //         SSR74HC595: for up to 32-ch gpio (serial shift register, output only.)
+                                          //         Works w/most OnStep features, channels assigned in order pin# 512 and up.
+
 // ---------------------------------------------------------------------------------------------------------------------------------
